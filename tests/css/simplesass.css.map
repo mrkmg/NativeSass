@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAGA,KAAK;EACH,UAAU,EAJI,IAAI",
+"sources": ["../sass/simplesass.sass"],
+"names": [],
+"file": "simplesass.css"
+}
