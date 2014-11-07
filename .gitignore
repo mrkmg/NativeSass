@@ -2,5 +2,6 @@
 
 /vendor/
 
+/tests/css
 
 .sass_cache
