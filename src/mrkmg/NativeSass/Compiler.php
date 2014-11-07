@@ -196,8 +196,8 @@ class Compiler
      */
     protected function getInputPath()
     {
-        if (function_exists('public_dir'))
-            return public_dir() . $this->inputPath;
+        if (function_exists('public_path'))
+            return public_path() . $this->inputPath;
         else
             return $this->inputPath;
     }
@@ -207,8 +207,8 @@ class Compiler
      */
     protected function getOutputPath()
     {
-        if (function_exists('public_dir'))
-            return public_dir() . $this->outputPath;
+        if (function_exists('public_path'))
+            return public_path() . $this->outputPath;
         else
             return $this->outputPath;
     }
