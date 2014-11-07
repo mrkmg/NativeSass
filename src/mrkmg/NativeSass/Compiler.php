@@ -67,7 +67,7 @@ class Compiler
     {
         if (substr($input_file,0,1) != '/')
         {
-            $input_file = $this->inputPath . '/' . $input_file;
+            $input_file = $this->getInputPath() . '/' . $input_file;
         }
 
         if ( ! file_exists($input_file))
@@ -99,7 +99,7 @@ class Compiler
     {
         if (empty($path))
         {
-            $path = $this->inputPath;
+            $path = $this->getInputPath();
         }
 
         if ( ! is_dir($path))
@@ -189,6 +189,28 @@ class Compiler
 
 
         $this->inputPath = $path;
+    }
+
+    /**
+     * @return string Path to input files
+     */
+    protected function getInputPath()
+    {
+        if (function_exists('public_dir'))
+            return public_dir() . $this->inputPath;
+        else
+            return $this->inputPath;
+    }
+
+    /**
+     * @return string Path to output files
+     */
+    protected function getOutputPath()
+    {
+        if (function_exists('public_dir'))
+            return public_dir() . $this->outputPath;
+        else
+            return $this->outputPath;
     }
 
     /**
