@@ -171,6 +171,21 @@ class Compiler
     }
 
     /**
+     * @param $path string Path to CSS files
+     * @throws \Exception
+     */
+    protected function setOutputPath($path)
+    {
+        // Remove trailing slash
+        if (substr($path,-1) == '/')
+        {
+            $path = substr($path, 0, strlen($path) - 1);
+        }
+
+        $this->outputPath = $path;
+    }
+
+    /**
      * @param $path string Path to SASS/SCSS files
      * @throws \Exception
      */
@@ -181,12 +196,6 @@ class Compiler
         {
             $path = substr($path, 0, strlen($path) - 1);
         }
-
-        if ( ! is_dir($path))
-        {
-            throw new \Exception($path . ' is not a directory.');
-        }
-
 
         $this->inputPath = $path;
     }
@@ -205,26 +214,6 @@ class Compiler
     protected function getOutputPath()
     {
         return $this->outputPath;
-    }
-
-    /**
-     * @param $path string Path to CSS files
-     * @throws \Exception
-     */
-    protected function setOutputPath($path)
-    {
-        // Remove trailing slash
-        if (substr($path,-1) == '/')
-        {
-            $path = substr($path, 0, strlen($path) - 1);
-        }
-
-        if( ! is_dir($path))
-        {
-            throw new \Exception($path . ' is not a directory.');
-        }
-
-        $this->outputPath = $path;
     }
 
     /**
