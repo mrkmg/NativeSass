@@ -90,6 +90,11 @@ class Compiler
         return $this->runCompileSingle($input_file, $output_file) == 0;
     }
 
+    /**
+     * @param string $path Path to files
+     * @param int $recursive_levels How many levels to search
+     * @throws \Exception
+     */
     public function compileAll($path = "", $recursive_levels = 0)
     {
         if (empty($path))
