@@ -21,11 +21,10 @@ class ManagerServiceProvider extends ServiceProvider
     public function boot()
     {
         // Register the package namespace
-        $this->package('mrkmg.nativesass');
+        $this->package('mrkmg/native-sass');
 
         // Read settings from config file
         $config = $this->app->config->get('nativesass::config', array());
-        $config['public_dir'] = public_path();
 
         // Apply config settings
         $this->app['mrkmg.nativesass']->config($config);
