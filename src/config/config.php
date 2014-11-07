@@ -2,10 +2,10 @@
 
 return array(
     // Default source directory
-    'inputPath'     => '/sass',
+    'inputPath'     => public_path() . '/sass',
 
     //Default output directory
-    'outputPath'    => '/css',
+    'outputPath'    => public_path() . '/css',
 
     //Default compiler path
     'compilerPath'  => 'sass'
