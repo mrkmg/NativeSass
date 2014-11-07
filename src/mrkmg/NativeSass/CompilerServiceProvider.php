@@ -5,7 +5,6 @@ use Illuminate\Foundation\AliasLoader;
 
 class CompilerServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -29,7 +28,7 @@ class CompilerServiceProvider extends ServiceProvider
         // Apply config settings
         $this->app['mrkmg.nativesass']->config($config);
 
-        // Add 'Assets' facade alias
+        // Add 'NativeSass' facade alias
         AliasLoader::getInstance()->alias('NativeSass', 'mrkmg\NativeSass\Facades\NativeSass');
     }
 

@@ -138,7 +138,7 @@ class Compiler
 
             $file_path = $path . '/' . $file;
 
-            if( is_dir($file_path) && $recursive_levels >= 0)
+            if( is_dir($file_path) && $recursive_levels > 0)
             {
                 $files = array_merge($files, $this->getMatchingFilesInDirectory($file_path, $recursive_levels - 1));
             }
