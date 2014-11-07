@@ -3,7 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 
-class ManagerServiceProvider extends ServiceProvider
+class CompilerServiceProvider extends ServiceProvider
 {
 
     /**
