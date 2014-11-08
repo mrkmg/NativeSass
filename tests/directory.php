@@ -2,7 +2,7 @@
 
 use mrkmg\NativeSass;
 
-require("../src/mrkmg/NativeSass/Compiler.php");
+require(dirname(__FILE__) . "/src/mrkmg/NativeSass/Compiler.php");
 
 $compiler = new \mrkmg\NativeSass\Compiler;
 

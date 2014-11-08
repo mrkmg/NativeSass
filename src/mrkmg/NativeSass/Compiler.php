@@ -58,6 +58,69 @@ class Compiler
     }
 
     /**
+     * @param $path string Path to CSS files
+     * @throws \Exception
+     */
+    public function setOutputPath($path)
+    {
+        // Remove trailing slash
+        if (substr($path,-1) == '/')
+        {
+            $path = substr($path, 0, strlen($path) - 1);
+        }
+
+        $this->outputPath = $path;
+    }
+
+    /**
+     * @param $path string Path to SASS/SCSS files
+     * @throws \Exception
+     */
+    public function setInputPath($path)
+    {
+        // Remove trailing slash
+        if (substr($path,-1) == '/')
+        {
+            $path = substr($path, 0, strlen($path) - 1);
+        }
+
+        $this->inputPath = $path;
+    }
+
+    /**
+     * @return string Path to input files
+     */
+    public function getInputPath()
+    {
+        return $this->inputPath;
+    }
+
+    /**
+     * @return string Path to output files
+     */
+    public function getOutputPath()
+    {
+        return $this->outputPath;
+    }
+
+
+    /**
+     * @param $path string Path to sass compiler
+     * @throws \Exception
+     */
+    public function setCompilerPath($path)
+    {
+        $version_check_result = shell_exec("$path -v");
+
+        if ( ! preg_match(self::VERSION_CHECK_REGEX, $version_check_result))
+        {
+            throw new \Exception($path . ' is not a valid path to the sass compiler.');
+        }
+
+        $this->compilerPath = $path;
+    }
+
+    /**
      * @param string $input_file
      * @param string $output_file
      * @return bool
@@ -91,8 +154,33 @@ class Compiler
     }
 
     /**
+     * @param array $file_list
+     * @return bool
+     * @throws \Exception
+     */
+    public function compileMany(array $file_list)
+    {
+        $result = true;
+
+        foreach ($file_list as $index => $value)
+        {
+            if (is_int($index))
+            {
+                $result &= $this->compileSingle($value);
+            }
+            else
+            {
+                $result &= $this->compileSingle($index, $value);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * @param string $path Path to files
      * @param int $recursive_levels How many levels to search
+     * @return bool Result of compilations
      * @throws \Exception
      */
     public function compileAll($path = "", $recursive_levels = 0)
@@ -109,10 +197,14 @@ class Compiler
 
         $files = $this->getMatchingFilesInDirectory($path, $recursive_levels);
 
+        $result = true;
+
         foreach($files as $file)
         {
-            $this->compileSingle($file);
+            $result &= $this->compileSingle($file);
         }
+
+        return $result;
     }
 
 
@@ -151,69 +243,6 @@ class Compiler
         closedir($dir);
 
         return $files;
-    }
-
-
-    /**
-     * @param $path string Path to sass compiler
-     * @throws \Exception
-     */
-    protected function setCompilerPath($path)
-    {
-        $version_check_result = shell_exec("$path -v");
-
-        if ( ! preg_match(self::VERSION_CHECK_REGEX, $version_check_result))
-        {
-            throw new \Exception($path . ' is not a valid path to the sass compiler.');
-        }
-
-        $this->compilerPath = $path;
-    }
-
-    /**
-     * @param $path string Path to CSS files
-     * @throws \Exception
-     */
-    protected function setOutputPath($path)
-    {
-        // Remove trailing slash
-        if (substr($path,-1) == '/')
-        {
-            $path = substr($path, 0, strlen($path) - 1);
-        }
-
-        $this->outputPath = $path;
-    }
-
-    /**
-     * @param $path string Path to SASS/SCSS files
-     * @throws \Exception
-     */
-    protected function setInputPath($path)
-    {
-        // Remove trailing slash
-        if (substr($path,-1) == '/')
-        {
-            $path = substr($path, 0, strlen($path) - 1);
-        }
-
-        $this->inputPath = $path;
-    }
-
-    /**
-     * @return string Path to input files
-     */
-    protected function getInputPath()
-    {
-        return $this->inputPath;
-    }
-
-    /**
-     * @return string Path to output files
-     */
-    protected function getOutputPath()
-    {
-        return $this->outputPath;
     }
 
     /**
