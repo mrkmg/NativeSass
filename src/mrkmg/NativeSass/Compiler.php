@@ -9,12 +9,12 @@ class Compiler
     const EXTENSIONS = '/(scss|sass)$/';
 
     /**
-     * @var string Path to Sass Compiler
+     * @var string Path to SASS Compiler
      */
     protected $compilerPath = "";
 
     /**
-     * @var string Path to Sass/Scss files
+     * @var string Path to SASS/SCSS files
      */
     protected $inputPath = "";
 
@@ -22,6 +22,16 @@ class Compiler
      * @var string Path to save CSS output
      */
     protected $outputPath = "";
+
+    /**
+     * @var string SASS output style
+     */
+    protected $outputStyle = "nested";
+
+    /**
+     * @var string Source map type
+     */
+    protected $sourceMap = "auto";
 
     //Public
 
@@ -55,6 +65,20 @@ class Compiler
         if (isset($options['outputPath']))
             $this->setOutputPath($options['outputPath']);
 
+        if (isset($options['outputStyle']))
+            $this->setOutputStyle($options['outputStyle']);
+
+        if (isset($options['sourceMap']))
+            $this->setSourceMap($options['sourceMap']);
+
+    }
+
+    /**
+     * @return string Path to output files
+     */
+    public function getOutputPath()
+    {
+        return $this->outputPath;
     }
 
     /**
@@ -73,6 +97,14 @@ class Compiler
     }
 
     /**
+     * @return string Path to input files
+     */
+    public function getInputPath()
+    {
+        return $this->inputPath;
+    }
+
+    /**
      * @param $path string Path to SASS/SCSS files
      * @throws \Exception
      */
@@ -88,21 +120,36 @@ class Compiler
     }
 
     /**
-     * @return string Path to input files
+     * @return string SASS output option for style
      */
-    public function getInputPath()
+    public function getOutputStyle()
     {
-        return $this->inputPath;
+        return $this->outputStyle;
     }
 
     /**
-     * @return string Path to output files
+     * @param string $outputStyle Set the style of the output
      */
-    public function getOutputPath()
+    public function setOutputStyle($outputStyle)
     {
-        return $this->outputPath;
+        $this->outputStyle = $outputStyle;
     }
 
+    /**
+     * @return string
+     */
+    public function getSourceMap()
+    {
+        return $this->sourceMap;
+    }
+
+    /**
+     * @param string $sourceMap
+     */
+    public function setSourceMap($sourceMap)
+    {
+        $this->sourceMap = $sourceMap;
+    }
 
     /**
      * @param $path string Path to sass compiler
@@ -248,13 +295,36 @@ class Compiler
     /**
      * @param $input string file to compile
      * @param $output string output of compilation
-     * @return int
+     * @return int 0 is success, 1 or higher is failure
      */
     protected function runCompileSingle($input, $output)
     {
-        exec($this->compilerPath . ' ' . $input . ' ' . $output, $result, $return);
+        exec(
+                $this->compilerPath .
+                ' -t ' . $this->getOutputStyle() .
+                ' --sourcemap=' . $this->getSourceMap() .
+                ' ' . $input . ' ' . $output,
+            $result,
+            $return
+        );
 
         return $return;
     }
 
+}
+
+class CompilerOutputStyle
+{
+    const NESTED        = 'nested';
+    const COMPACT       = 'compact';
+    const COMPRESSED    = 'compressed';
+    const EXPANDED      = 'expanded';
+}
+
+class CompilerSourceMap
+{
+    const AUTO      = 'auto';
+    const INLINE    = 'inline';
+    const FILE      = 'file';
+    const NONE      = 'none';
 }

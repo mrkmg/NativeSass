@@ -8,5 +8,11 @@ return array(
     'outputPath'    => public_path() . '/css',
 
     //Default compiler path
-    'compilerPath'  => 'sass'
+    'compilerPath'  => 'sass',
+
+    //Style of output (NESTED, COMPACT, COMPRESSED, EXPANDED)
+    'outputStyle'    => \mrkmg\NativeSass\CompilerOutputStyle::NESTED,
+
+    //Sourcemap type (AUTO, INLINE, FILE, NONE)
+    'sourceMap'     => \mrkmg\NativeSass\CompilerSourceMap::AUTO
 );
