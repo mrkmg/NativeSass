@@ -128,15 +128,20 @@ class Compiler
     }
 
     /**
-     * @param string $outputStyle Set the style of the output
+     * @param $outputStyle SASS output option of style
+     * @throws \Exception
      */
     public function setOutputStyle($outputStyle)
     {
+        if ( ! CompilerOutputStyle::validate($outputStyle))
+        {
+            throw new \Exception('Unknown output style.');
+        }
         $this->outputStyle = $outputStyle;
     }
 
     /**
-     * @return string
+     * @return string SASS output option of style
      */
     public function getSourceMap()
     {
@@ -144,10 +149,15 @@ class Compiler
     }
 
     /**
-     * @param string $sourceMap
+     * @param $sourceMap
+     * @throws \Exception
      */
     public function setSourceMap($sourceMap)
     {
+        if ( ! CompilerSourceMap::validate($sourceMap))
+        {
+            throw new \Exception('Unknown source map type.');
+        }
         $this->sourceMap = $sourceMap;
     }
 
@@ -319,6 +329,16 @@ class CompilerOutputStyle
     const COMPACT       = 'compact';
     const COMPRESSED    = 'compressed';
     const EXPANDED      = 'expanded';
+
+    public static function validate($type)
+    {
+        return in_array($type, array(
+            'nested',
+            'compact',
+            'compressed',
+            'expanded'
+        ));
+    }
 }
 
 class CompilerSourceMap
@@ -327,4 +347,14 @@ class CompilerSourceMap
     const INLINE    = 'inline';
     const FILE      = 'file';
     const NONE      = 'none';
+
+    public static function validate($type)
+    {
+        return in_array($type, array(
+            'auto',
+            'inline',
+            'file',
+            'none'
+        ));
+    }
 }
