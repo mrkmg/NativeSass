@@ -1,5 +1,7 @@
 <?php
 
+use \mrkmg\NativeSass;
+
 return array(
     // Default source directory
     'inputPath'     => public_path() . '/sass',
@@ -11,8 +13,8 @@ return array(
     'compilerPath'  => 'sass',
 
     //Style of output (NESTED, COMPACT, COMPRESSED, EXPANDED)
-    'outputStyle'    => \mrkmg\NativeSass\CompilerOutputStyle::NESTED,
+    'outputStyle'    => CompilerOutputStyle::NESTED,
 
     //Sourcemap type (AUTO, INLINE, FILE, NONE)
-    'sourceMap'     => \mrkmg\NativeSass\CompilerSourceMap::AUTO
+    'sourceMap'     => CompilerSourceMap::AUTO
 );
