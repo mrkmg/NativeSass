@@ -10,8 +10,8 @@ $compiler->config(array(
     'compilerPath'  => 'sass',
     'inputPath'     => dirname(__FILE__) . '/sass',
     'outputPath'    => dirname(__FILE__) . '/css',
-    'outputStyle'   => NativeSass\CompilerOutputStyle::EXPANDED,
-    'sourceMap'     => NativeSass\CompilerSourceMap::FILE,
+    'outputStyle'   => 'expanded',
+    'sourceMap'     => 'file',
 ));
 
 $compiler->compileSingle('simplescss.scss');

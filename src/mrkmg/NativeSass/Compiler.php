@@ -5,7 +5,6 @@ namespace mrkmg\NativeSass;
 class Compiler
 {
     const VERSION_CHECK_REGEX = '/Sass ([0-9.]+) \(.+\)/';
-
     const EXTENSIONS = '/(scss|sass)$/';
 
     /**
@@ -133,7 +132,12 @@ class Compiler
      */
     public function setOutputStyle($outputStyle)
     {
-        if ( ! CompilerOutputStyle::validate($outputStyle))
+        if ( ! in_array($outputStyle, array(
+            'nested',
+            'compact',
+            'compressed',
+            'expanded'
+        )))
         {
             throw new \Exception('Unknown output style.');
         }
@@ -154,7 +158,12 @@ class Compiler
      */
     public function setSourceMap($sourceMap)
     {
-        if ( ! CompilerSourceMap::validate($sourceMap))
+        if ( ! in_array($sourceMap, array(
+            'auto',
+            'inline',
+            'file',
+            'none'
+        )))
         {
             throw new \Exception('Unknown source map type.');
         }
@@ -321,40 +330,4 @@ class Compiler
         return $return;
     }
 
-}
-
-class CompilerOutputStyle
-{
-    const NESTED        = 'nested';
-    const COMPACT       = 'compact';
-    const COMPRESSED    = 'compressed';
-    const EXPANDED      = 'expanded';
-
-    public static function validate($type)
-    {
-        return in_array($type, array(
-            'nested',
-            'compact',
-            'compressed',
-            'expanded'
-        ));
-    }
-}
-
-class CompilerSourceMap
-{
-    const AUTO      = 'auto';
-    const INLINE    = 'inline';
-    const FILE      = 'file';
-    const NONE      = 'none';
-
-    public static function validate($type)
-    {
-        return in_array($type, array(
-            'auto',
-            'inline',
-            'file',
-            'none'
-        ));
-    }
 }

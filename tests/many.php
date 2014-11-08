@@ -11,8 +11,8 @@ $compiler->config(array(
     'compilerPath'  => 'sass',
     'inputPath'     => dirname(__FILE__) . '/sass',
     'outputPath'    => dirname(__FILE__) . '/css',
-    'outputStyle'   => NativeSass\CompilerOutputStyle::NESTED,
-    'sourceMap'     => NativeSass\CompilerSourceMap::AUTO,
+    'outputStyle'   => 'nested',
+    'sourceMap'     => 'auto',
 ));
 
 $compiler->compileMany([
