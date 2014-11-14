@@ -216,6 +216,11 @@ class Compiler
             }
         }
 
+        if ( ! is_dir(dirname($output_file)))
+        {
+            mkdir(dirname($output_file), 0777, true);
+        }
+
         return $this->runCompileSingle($input_file, $output_file) == 0;
     }
 
@@ -267,7 +272,9 @@ class Compiler
 
         foreach($files as $file)
         {
-            $result &= $this->compileSingle($file);
+            $output = str_replace($path, $this->getOutputPath(), preg_replace(self::EXTENSIONS, 'css', $file));
+
+            $result &= $this->compileSingle($file, $output);
         }
 
         return $result;
