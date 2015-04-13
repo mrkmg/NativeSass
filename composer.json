@@ -1,6 +1,8 @@
 {
     "name": "mrkmg/native-sass",
+    "type": "library",
     "description": "A native sass wrapper",
+    "keywords": ["sass", "scss", "compiler"],
     "authors": [
         {
             "name": "Kevin Gravier",

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+echo "Starting Singles Test"
+echo "=============="
+php tests/singles.php
+
+echo ""
+
+echo "Starting Many Test"
+echo "=============="
+php tests/many.php
+
+echo ""
+
+echo "Starting Directory Test"
+echo "=============="
+php tests/directory.php
+
+echo ""

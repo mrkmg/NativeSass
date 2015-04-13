@@ -176,7 +176,7 @@ class Compiler
      */
     public function setCompilerPath($path)
     {
-        $version_check_result = shell_exec("$path -v");
+        $version_check_result = $this->simpleExec("$path -v");
 
         if ( ! preg_match(self::VERSION_CHECK_REGEX, $version_check_result))
         {
@@ -325,16 +325,36 @@ class Compiler
      */
     protected function runCompileSingle($input, $output)
     {
-        exec(
+        $result = $this->advancedExec(
                 $this->compilerPath .
                 ' -t ' . $this->getOutputStyle() .
                 ' --sourcemap=' . $this->getSourceMap() .
                 ' ' . $input . ' ' . $output,
-            $result,
             $return
         );
 
         return $return;
+    }
+
+    /**
+     * @param $command string command to run
+     * @param $returnCode in will get set to return code of command
+     * @return mixed output of command
+     */
+    protected function advancedExec($command, &$returnCode)
+    {
+        exec($command, $result, $returnCode);
+
+        return $result;
+    }
+
+    /**
+     * @param $command string command to run
+     * @return string result of command
+     */
+    protected function simpleExec($command)
+    {
+        return shell_exec($command);
     }
 
 }
